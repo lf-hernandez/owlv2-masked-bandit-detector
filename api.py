@@ -62,9 +62,9 @@ async def health():
 
 
 @app.post("/detect")
-async def detect_raccoons(file: UploadFile = File(...), threshold: float = 0.1):
+def detect_raccoons(file: UploadFile = File(...), threshold: float = 0.1):
     try:
-        contents = await file.read()
+        contents = file.file.read()
         image = Image.open(io.BytesIO(contents))
 
         detections = detector.detect(image, threshold=threshold)
@@ -80,9 +80,9 @@ async def detect_raccoons(file: UploadFile = File(...), threshold: float = 0.1):
 
 
 @app.post("/detect-and-draw")
-async def detect_and_draw(file: UploadFile = File(...), threshold: float = 0.1):
+def detect_and_draw(file: UploadFile = File(...), threshold: float = 0.1):
     try:
-        contents = await file.read()
+        contents = file.file.read()
         image = Image.open(io.BytesIO(contents))
 
         result = detector.detect_and_draw(image, threshold=threshold)
